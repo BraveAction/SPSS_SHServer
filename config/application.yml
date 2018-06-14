@@ -1,0 +1,63 @@
+##服务器端口
+#server.port=8887
+##项目名(http://localhost:8887/SmartHome/
+#server.servlet.context-path=/SmartHome
+##数据库路径
+#spring.datasource.url=jdbc:sqlite:Database/SHDB
+##数据库用户名
+#spring.datasource.userName=
+##数据库用户名密码
+#spring.datasource.password=
+##数据库驱动
+#spring.datasource.driver-class-name=org.sqlite.JDBC
+##日志配置文件
+#logging.config=classpath:logback-spring.xml
+
+
+spring:
+#DataSource
+  datasource:
+    url: jdbc:sqlite:Database/SHDB.sqlite
+    username:
+    password:
+    driver-class-name: org.sqlite.JDBC
+#apk存放路径,自定义目录用于app的下载
+  apkDir: /Users/gxy/workSpace/webProject/SPSS_SHServer/apks/
+#static
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/, file:${spring.apkDir}
+
+#webApp
+server:
+  port: 8443
+  servlet:
+    context-path: /SmartHome
+#  HTTPS
+#  ssl:
+#    key-store: ssl/jingyoukeji.cn.jks
+#    key-store-password: f3137pw1iwa1
+#    key-store-type: JKS
+#    enabled: true
+
+#Logging
+logging:
+  config: ./config/logback-spring.xml
+
+#JWT
+jwt:
+    header: Authorization
+    secret: mySecret
+    expiration: 604800
+    tokenHead: "Bearer "
+
+tencent:
+#腾讯短信
+    sms:
+      appid: 1400089636
+      appkey: 316531cc1092a91f30fc0425d42351dd
+      templateid: 119404
+      smsSign: 上品上生智能科技
+      interval: 2
+
