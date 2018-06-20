@@ -1,25 +1,13 @@
-##服务器端口
-#server.port=8887
-##项目名(http://localhost:8887/SmartHome/
-#server.servlet.context-path=/SmartHome
-##数据库路径
-#spring.datasource.url=jdbc:sqlite:Database/SHDB
-##数据库用户名
-#spring.datasource.userName=
-##数据库用户名密码
-#spring.datasource.password=
-##数据库驱动
-#spring.datasource.driver-class-name=org.sqlite.JDBC
-##日志配置文件
-#logging.config=classpath:logback-spring.xml
-
-
 spring:
 #DataSource
   datasource:
+  #数据库路径
     url: jdbc:sqlite:Database/SHDB.sqlite
+    #数据库用户名
     username:
+    #数据库用户名密码
     password:
+    #数据库驱动
     driver-class-name: org.sqlite.JDBC
 #apk存放路径,自定义目录用于app的下载
   apkDir: /Users/gxy/workSpace/webProject/SPSS_SHServer/apks/
@@ -31,15 +19,32 @@ spring:
 
 #webApp
 server:
-  port: 8443
+#服务器端口
+  port: 8080
+  #项目名
+ #context-path: /***
   servlet:
-    context-path: /SmartHome
 #  HTTPS
-#  ssl:
-#    key-store: ssl/jingyoukeji.cn.jks
-#    key-store-password: f3137pw1iwa1
-#    key-store-type: JKS
+#    测试
+#    key-store: ssl/test_keystore.p12
+#    key-store-password: 123456
+#    key-alias: tomcat
+#    key-store-type: PKCS12
 #    enabled: true
+
+#mqtt
+mqtt:
+  broker:
+    port: 8883
+    host: 0.0.0.0
+    jmx: false
+  consumer:
+    host: vm://localhost
+    timeout: 5000
+    session-window-seconds: 300
+    #topic格式
+    topic-pattern: .* #topic模式
+    topic-level: 5 #例：/t1 /t1/ /t1/t2/ /t1/t2/t3/ /t1/t2/t3/t4/
 
 #Logging
 logging:
@@ -49,15 +54,16 @@ logging:
 jwt:
     header: Authorization
     secret: mySecret
+    #过期时间毫秒
     expiration: 604800
     tokenHead: "Bearer "
 
 tencent:
 #腾讯短信
     sms:
-      appid: 1400089636
-      appkey: 316531cc1092a91f30fc0425d42351dd
-      templateid: 119404
-      smsSign: 上品上生智能科技
-      interval: 2
+      appid:
+      appkey:
+      templateid:
+      smsSign:
+      interval:
 

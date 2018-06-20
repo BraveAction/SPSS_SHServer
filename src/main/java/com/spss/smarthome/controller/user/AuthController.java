@@ -4,7 +4,8 @@ import com.spss.smarthome.SmarthomeApplication;
 import com.spss.smarthome.common.exception.UserException;
 import com.spss.smarthome.controller.common.RequestParameterException;
 import com.spss.smarthome.controller.common.Result;
-import com.spss.smarthome.controller.user.form.UserForm;
+import com.spss.smarthome.controller.user.form.UserSignInForm;
+import com.spss.smarthome.controller.user.form.UserSignUpForm;
 import com.spss.smarthome.model.User;
 import com.spss.smarthome.service.AuthService;
 import com.spss.smarthome.service.common.ServiceException;
@@ -38,9 +39,9 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             throw new RequestParameterException();
         }
-        String token = authService.login(authenticationRequest.getUserName(), authenticationRequest.getPassword());
+        UserSignInForm userSignInForm = authService.signIn(authenticationRequest.getUserName(), authenticationRequest.getPassword());
 
-        return Result.success("", token);
+        return Result.success("", userSignInForm);
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.GET)
@@ -56,7 +57,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public Result register(@Valid @RequestBody UserForm addedUser, BindingResult bindingResult) {
+    public Result register(@Valid @RequestBody UserSignUpForm addedUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new RequestParameterException();
         }
@@ -75,7 +76,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/initPassword", method = RequestMethod.POST)
-    public Result initPassword(@Valid @RequestBody UserForm updatePwdUser, BindingResult bindingResult) {
+    public Result initPassword(@Valid @RequestBody UserSignUpForm updatePwdUser, BindingResult bindingResult) {
         String cacheVcode = (String) SmarthomeApplication.VCODEMAP.get(updatePwdUser.getPhone());
         if (cacheVcode == null || !cacheVcode.equals(updatePwdUser.getvCode())) {
             throw new RequestParameterException("验证码不匹配");

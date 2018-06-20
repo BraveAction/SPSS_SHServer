@@ -2,14 +2,14 @@ package com.spss.smarthome.controller.common;
 
 /**
  * 统一返回结果
+ * {"code":200,"message":"","data":{}/[]/""}
  */
-
 import org.springframework.http.HttpStatus;
 
 public class Result {
     private int code;
     private String message = "";
-    private Object data = "";
+    private Object data = null;
 
 
     public static Result success(Object data) {

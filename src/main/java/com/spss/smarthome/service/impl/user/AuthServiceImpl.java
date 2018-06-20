@@ -2,12 +2,15 @@ package com.spss.smarthome.service.impl.user;
 
 
 import com.spss.smarthome.common.exception.UserException;
+import com.spss.smarthome.controller.user.form.UserSignInForm;
 import com.spss.smarthome.dao.UserDao;
 import com.spss.smarthome.model.User;
 import com.spss.smarthome.secruity.JwtTokenUtil;
 import com.spss.smarthome.secruity.JwtUser;
+import com.spss.smarthome.secruity.JwtUserDetailsServiceImpl;
 import com.spss.smarthome.service.AuthService;
 import com.spss.smarthome.service.common.ServiceException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -81,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(String username, String password) {
+    public UserSignInForm signIn(String username, String password) {
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(upToken);
@@ -89,8 +92,16 @@ public class AuthServiceImpl implements AuthService {
 
         // Reload password post-security so we can generate token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        return token;
+        if (userDetailsService instanceof JwtUserDetailsServiceImpl) {
+            User user = ((JwtUserDetailsServiceImpl) userDetailsService).getUser();
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            UserSignInForm userSignInForm = new UserSignInForm();
+            BeanUtils.copyProperties(user, userSignInForm);
+            userSignInForm.setToken(token);
+            return userSignInForm;
+        } else {
+            return null;
+        }
     }
 
     @Override

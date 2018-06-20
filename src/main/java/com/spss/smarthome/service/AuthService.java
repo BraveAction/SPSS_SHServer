@@ -1,5 +1,6 @@
 package com.spss.smarthome.service;
 
+import com.spss.smarthome.controller.user.form.UserSignInForm;
 import com.spss.smarthome.model.User;
 import com.spss.smarthome.service.common.ServiceException;
 
@@ -36,7 +37,7 @@ public interface AuthService {
      * @param password
      * @return
      */
-    String login(String username, String password);
+    UserSignInForm signIn(String username, String password);
 
     /**
      * 用户刷新Token

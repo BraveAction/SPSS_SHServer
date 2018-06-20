@@ -4,7 +4,7 @@ import com.spss.smarthome.model.User;
 
 import javax.validation.constraints.NotNull;
 
-public class UserForm extends User {
+public class UserSignUpForm extends User {
     @NotNull
     private String vCode;
 
