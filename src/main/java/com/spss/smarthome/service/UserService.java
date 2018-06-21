@@ -1,7 +1,7 @@
 package com.spss.smarthome.service;
 
+import com.spss.smarthome.common.exception.ServiceException;
 import com.spss.smarthome.model.User;
-import com.spss.smarthome.service.common.ServiceException;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.spss.smarthome.config;
+package com.spss.smarthome.common.config;
 
 import com.spss.smarthome.secruity.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,8 +74,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
-
                         "/*.apk").permitAll()
+                //swagger
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-resources").permitAll()
+                .antMatchers("/swagger-resources/configuration/*").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/*").permitAll()
+                .antMatchers("/configuration/*").permitAll()
+
                 // 对于获取token的rest api要允许匿名访问
                 .antMatchers("/auth/**").permitAll()
                 // 测试接口

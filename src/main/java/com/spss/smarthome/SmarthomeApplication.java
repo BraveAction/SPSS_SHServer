@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ import java.util.Map;
 @Configuration
 @MapperScan(basePackages = {"com.spss.smarthome.dao"})
 @SpringBootApplication
+@EnableSwagger2
 public class SmarthomeApplication {
     public static Map VCODEMAP = new HashMap();
 

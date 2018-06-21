@@ -1,9 +1,9 @@
 package com.spss.smarthome.service.impl.user;
 
+import com.spss.smarthome.common.exception.ServiceException;
 import com.spss.smarthome.dao.UserDao;
 import com.spss.smarthome.model.User;
 import com.spss.smarthome.service.UserService;
-import com.spss.smarthome.service.common.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,15 +1,15 @@
 package com.spss.smarthome.service.impl.user;
 
 
+import com.spss.smarthome.common.exception.ServiceException;
 import com.spss.smarthome.common.exception.UserException;
-import com.spss.smarthome.controller.user.form.UserSignInForm;
+import com.spss.smarthome.controller.form.UserSignInForm;
 import com.spss.smarthome.dao.UserDao;
 import com.spss.smarthome.model.User;
 import com.spss.smarthome.secruity.JwtTokenUtil;
 import com.spss.smarthome.secruity.JwtUser;
 import com.spss.smarthome.secruity.JwtUserDetailsServiceImpl;
 import com.spss.smarthome.service.AuthService;
-import com.spss.smarthome.service.common.ServiceException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
         }
         final String rawPassword = userToAdd.getPassword();
         userToAdd.setPassword(bCryptPasswordEncoder.encode(rawPassword));
-        if (userRepository.insert(userToAdd) != -1) {
+        if (userRepository.insert(userToAdd) > 0) {
             return userToAdd;
         }
         return null;
@@ -79,8 +79,7 @@ public class AuthServiceImpl implements AuthService {
     public boolean updatePassword(User updatePwdUser) {
         final String rawPassword = updatePwdUser.getPassword();
         updatePwdUser.setPassword(bCryptPasswordEncoder.encode(rawPassword));
-        Long index = userRepository.updatePassword(updatePwdUser);
-        return index != -1;
+        return userRepository.updatePassword(updatePwdUser) > 0;
     }
 
     @Override

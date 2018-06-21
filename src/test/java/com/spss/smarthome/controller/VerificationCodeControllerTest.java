@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class SignUpControllerTest {
+public class VerificationCodeControllerTest {
     private MockMvc mockMvc;
 
     @Autowired

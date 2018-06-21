@@ -43,6 +43,7 @@ public class JwtUser implements UserDetails {
         this.lastPasswordResetDate = new Date();
     }
 
+
     //返回分配给用户的角色列表
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

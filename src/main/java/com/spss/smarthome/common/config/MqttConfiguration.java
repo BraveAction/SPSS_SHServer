@@ -1,4 +1,4 @@
-package com.spss.smarthome.config;
+package com.spss.smarthome.common.config;
 
 import com.spss.smarthome.jms.MqttBroker;
 import com.spss.smarthome.jms.MqttConsumer;

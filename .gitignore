@@ -6,3 +6,10 @@
 /target
 jingyoukeji.cn.zip
 *.iml
+/src/main/java/com/spss/smarthome/model/House.java
+/src/main/java/com/spss/smarthome/dao/HouseDao.java
+/src/main/java/com/spss/smarthome/controller/house/HouseController.java
+/src/main/java/com/spss/smarthome/controller/form/HouseForm.java
+/src/main/java/com/spss/smarthome/service/impl/house/HouseServerImpl.java
+/src/main/java/com/spss/smarthome/service/HouseService.java
+

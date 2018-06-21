@@ -1,9 +1,10 @@
-package com.spss.smarthome.controller.common;
+package com.spss.smarthome.common.controller;
 
 /**
  * 统一返回结果
- * {"code":200,"message":"","data":{}/[]/""}
+ * {"ERROR_CODE":200,"message":"","data":{}/[]/""}
  */
+
 import org.springframework.http.HttpStatus;
 
 public class Result {

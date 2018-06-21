@@ -3,11 +3,13 @@ package com.spss.smarthome.controller.user;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.spss.smarthome.SmarthomeApplication;
-import com.spss.smarthome.controller.BaseController;
-import com.spss.smarthome.controller.common.RequestParameterException;
-import com.spss.smarthome.controller.common.Result;
+import com.spss.smarthome.common.controller.BaseController;
+import com.spss.smarthome.common.controller.Result;
+import com.spss.smarthome.common.exception.RequestParameterException;
+import com.spss.smarthome.common.exception.ServiceException;
 import com.spss.smarthome.service.UserService;
-import com.spss.smarthome.service.common.ServiceException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-
-/**
- * 用户注册
- */
 @RestController
 @RequestMapping("/user")
-public class SignUpController extends BaseController {
+@Api(tags = "用户获取验证码")
+public class VerificationCodeController extends BaseController {
 
     //腾讯短信SDK APPID
     @Value("${tencent.sms.appid}")
@@ -49,7 +48,8 @@ public class SignUpController extends BaseController {
      * @return
      * @Todo 验证码发送时间间隔
      */
-    @RequestMapping(value = "/getVerificationCode")
+    @RequestMapping(value = "/getVerificationCode", method = RequestMethod.GET)
+    @ApiOperation(value = "获取短信验证码", notes = "用于用户注册，找回密码接口")
     public Result getVerificationCode(@RequestParam(value = "phone") String phone) {
         Result result;
         if (phone == null || phone.isEmpty()) {        //没有手机号参数
@@ -82,6 +82,7 @@ public class SignUpController extends BaseController {
      * 用于测试的接口api
      */
     @RequestMapping(value = "/findall", method = RequestMethod.GET)
+    @ApiOperation(value = "获取所有用户", notes = "用于测试的接口")
     public Result findall() throws ServiceException {
         return Result.success(userService.finall());
     }

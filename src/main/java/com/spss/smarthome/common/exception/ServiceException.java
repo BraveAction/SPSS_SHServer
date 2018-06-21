@@ -1,6 +1,4 @@
-package com.spss.smarthome.service.common;
-
-import com.spss.smarthome.common.exception.GlobalException;
+package com.spss.smarthome.common.exception;
 
 /**
  * 程序问题造成的业务操作失败抛此异常 1000
@@ -8,7 +6,7 @@ import com.spss.smarthome.common.exception.GlobalException;
 public class ServiceException extends GlobalException {
     public ServiceException(String message) {
         super(message);
-        code = 1000;
+        ERROR_CODE = 1000;
     }
 
     public ServiceException() {

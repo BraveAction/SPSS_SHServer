@@ -1,4 +1,4 @@
-package com.spss.smarthome.controller.user.form;
+package com.spss.smarthome.controller.form;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

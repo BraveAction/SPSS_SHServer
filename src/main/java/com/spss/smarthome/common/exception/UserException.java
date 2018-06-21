@@ -6,6 +6,6 @@ package com.spss.smarthome.common.exception;
 public class UserException extends GlobalException {
     public UserException(String message) {
         super(message);
-        code = 1002;
+        ERROR_CODE = 1002;
     }
 }

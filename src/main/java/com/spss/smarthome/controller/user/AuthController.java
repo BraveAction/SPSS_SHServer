@@ -1,16 +1,18 @@
 package com.spss.smarthome.controller.user;
 
 import com.spss.smarthome.SmarthomeApplication;
+import com.spss.smarthome.common.controller.BaseController;
+import com.spss.smarthome.common.controller.Result;
+import com.spss.smarthome.common.exception.RequestParameterException;
+import com.spss.smarthome.common.exception.ServiceException;
 import com.spss.smarthome.common.exception.UserException;
-import com.spss.smarthome.controller.common.RequestParameterException;
-import com.spss.smarthome.controller.common.Result;
-import com.spss.smarthome.controller.user.form.UserSignInForm;
-import com.spss.smarthome.controller.user.form.UserSignUpForm;
+import com.spss.smarthome.controller.form.UserSignInForm;
+import com.spss.smarthome.controller.form.UserSignUpForm;
 import com.spss.smarthome.model.User;
 import com.spss.smarthome.service.AuthService;
-import com.spss.smarthome.service.common.ServiceException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,16 +28,15 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
-
-    @Value("${jwt.header}")
-    private String tokenHeader;
+@Api(tags = "用户登录注册")
+public class AuthController extends BaseController {
 
     @Autowired
     private AuthService authService;
 
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    public Result createAuthenticationToken(@Valid @RequestBody User authenticationRequest, BindingResult bindingResult) {
+    @ApiOperation(value = "用户登录", notes = "用户登录")
+    public Result signIn(@Valid @RequestBody User authenticationRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new RequestParameterException();
         }
@@ -45,8 +46,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public Result refreshAndGetAuthenticationToken(
-            HttpServletRequest request) throws AuthenticationException {
+    @ApiOperation(value = "用户刷新令牌", notes = "用户刷新令牌")
+    public Result refreshAndGetAuthenticationToken(HttpServletRequest request) throws AuthenticationException {
         String token = request.getHeader(tokenHeader);
         String refreshedToken = authService.refresh(token);
         if (refreshedToken == null) {
@@ -57,7 +58,8 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public Result register(@Valid @RequestBody UserSignUpForm addedUser, BindingResult bindingResult) {
+    @ApiOperation(value = "用户注册", notes = "用户注册")
+    public Result signUp(@Valid @RequestBody UserSignUpForm addedUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new RequestParameterException();
         }
@@ -76,6 +78,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/initPassword", method = RequestMethod.POST)
+    @ApiOperation(value = "用户修改密码", notes = "用户修改密码")
     public Result initPassword(@Valid @RequestBody UserSignUpForm updatePwdUser, BindingResult bindingResult) {
         String cacheVcode = (String) SmarthomeApplication.VCODEMAP.get(updatePwdUser.getPhone());
         if (cacheVcode == null || !cacheVcode.equals(updatePwdUser.getvCode())) {

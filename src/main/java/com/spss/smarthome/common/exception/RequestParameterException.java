@@ -1,6 +1,4 @@
-package com.spss.smarthome.controller.common;
-
-import com.spss.smarthome.common.exception.GlobalException;
+package com.spss.smarthome.common.exception;
 
 /**
  * 用户请求参数错误 1001
@@ -8,7 +6,7 @@ import com.spss.smarthome.common.exception.GlobalException;
 public class RequestParameterException extends GlobalException {
     public RequestParameterException(String message) {
         super(message);
-        code = 1001;
+        ERROR_CODE = 1001;
     }
 
     public RequestParameterException() {

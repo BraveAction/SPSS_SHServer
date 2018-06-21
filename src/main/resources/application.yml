@@ -9,6 +9,7 @@ spring:
     password:
     #数据库驱动
     driver-class-name: org.sqlite.JDBC
+    sqlDatePattern: yyyy-MM-dd HH:mm:ss
 #apk存放路径,自定义目录用于app的下载
   apkDir: /Users/gxy/workSpace/webProject/SPSS_SHServer/apks/
 #static
@@ -54,9 +55,13 @@ logging:
 jwt:
     header: Authorization
     secret: mySecret
-    #过期时间毫秒
-    expiration: 604800
     tokenHead: "Bearer "
+    #过期时间以天为单位
+    expiration: 7
+
+Swagger2:
+  title: 上品上生智能家居resetful 接口文档
+  version: 1.0
 
 tencent:
 #腾讯短信

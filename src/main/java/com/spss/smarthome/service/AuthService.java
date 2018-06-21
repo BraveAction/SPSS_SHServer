@@ -1,8 +1,8 @@
 package com.spss.smarthome.service;
 
-import com.spss.smarthome.controller.user.form.UserSignInForm;
+import com.spss.smarthome.common.exception.ServiceException;
+import com.spss.smarthome.controller.form.UserSignInForm;
 import com.spss.smarthome.model.User;
-import com.spss.smarthome.service.common.ServiceException;
 
 public interface AuthService {
     /**
