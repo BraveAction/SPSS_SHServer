@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
 
@@ -22,9 +23,9 @@ import static org.junit.Assert.assertTrue;
 public class QRcodeTest {
     @Test
     public void generateQRcode() {
-        String mac = "00:0c:43:e1:76:28";
+        String mac = "00:0c:43:e1:76:27";
         Integer size = 500;
-        File qrcodeImageFile = new File("target/style.png");
+        File qrcodeImageFile = new File("images/gateway/qrcode/", UUID.randomUUID().toString() + ".png");
 
         try {
 
@@ -32,13 +33,13 @@ public class QRcodeTest {
                     .setW(size)
                     .setH(size)
 //                    .setDrawPreColor(0xff008e59)
-                    .setDrawPreColor(0xff9C877B)        //二维码的颜色
+//                    .setDrawPreColor(0xff9C877B)        //二维码的颜色
                     .setErrorCorrection(ErrorCorrectionLevel.M)
                     .setLogoStyle(QrCodeOptions.LogoStyle.ROUND)        //二维码的样式
                     .setLogoBgColor(Color.LIGHT_GRAY)
 //                    .setLogo(logo)
                     .setLogoRate(10)
-                    .setDrawStyle(QrCodeOptions.DrawStyle.CIRCLE)       //二维码信息的样式
+//                    .setDrawStyle(QrCodeOptions.DrawStyle.CIRCLE)       //二维码信息的样式
                     .setDrawEnableScale(true)
                     .asBufferedImage();
             ImageIO.write(img, "png", qrcodeImageFile);

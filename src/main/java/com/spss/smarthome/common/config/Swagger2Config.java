@@ -41,13 +41,13 @@ public class Swagger2Config {
 //                .apis(RequestHandlerSelectors.basePackage("com.spss.smarthome"))      //指定包下生成apiDoc
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
+//                .paths(PathSelectors.none())//如果是线上环境，添加路径过滤，设置为全部都不符合
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title(title)
-//                .description("上品上生智能家居resetful apiDoc,便于测试")
                 .termsOfServiceUrl("https://localhost:8443/")
                 .version(version)
                 .build();

@@ -616,7 +616,7 @@ public class QrCodeGenWrapper {
         }
 
 
-        public BufferedImage asBufferedImage() throws IOException, WriterException {
+        public BufferedImage asBufferedImage() throws WriterException {
             return QrCodeGenWrapper.asBufferedImage(build());
         }
 

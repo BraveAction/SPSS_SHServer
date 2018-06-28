@@ -1,5 +1,6 @@
 /.idea
 /apks
+/Database/SHDB.sqlite
 /config/application.yml
 /ssl/jingyoukeji.cn.csr
 /ssl/jingyoukeji.cn.jks
@@ -13,3 +14,10 @@ jingyoukeji.cn.zip
 /src/main/java/com/spss/smarthome/service/impl/house/HouseServerImpl.java
 /src/main/java/com/spss/smarthome/service/HouseService.java
 
+/src/main/java/com/spss/smarthome/dao/GatewayDao.java
+/src/main/java/com/spss/smarthome/model/Gateway.java
+/src/main/java/com/spss/smarthome/controller/manage/Manage.java
+/src/main/java/com/spss/smarthome/service/impl/gateway/GatewayServiceImpl.java
+/src/main/java/com/spss/smarthome/service/GatewayService.java
+/src/main/java/com/spss/smarthome/service/Utils.java
+/src/test/java/com/spss/smarthome/dao/GatewayDaoTest.java

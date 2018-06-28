@@ -24,7 +24,7 @@ server:
   port: 8080
   #项目名
  #context-path: /***
-  servlet:
+#  servlet:
 #  HTTPS
 #    测试
 #    key-store: ssl/test_keystore.p12
