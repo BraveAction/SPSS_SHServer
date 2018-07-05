@@ -18,20 +18,26 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserService authService;
 
-    private User user;
+    private JwtUser mJwtUser;
+    private User mUser;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        user = authService.findByUsername(username);
+        mUser = authService.findByUsername(username);
 
-        if (user == null) {
+        if (mUser == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {
-            return JwtUserFactory.create(user);
+            mJwtUser = JwtUserFactory.create(mUser);
+            return mJwtUser;
         }
     }
 
     public User getUser() {
-        return user;
+        return mUser;
+    }
+
+    public JwtUser getJwtUser() {
+        return mJwtUser;
     }
 }

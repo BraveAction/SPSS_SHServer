@@ -23,12 +23,13 @@ public interface AuthService {
     User register(User userToAdd);
 
     /**
-     * 用户更新密码
+     * 用户重置密码
      *
      * @param updatePwdUser
      * @return
      */
     boolean updatePassword(User updatePwdUser);
+
 
     /**
      * 用户登录

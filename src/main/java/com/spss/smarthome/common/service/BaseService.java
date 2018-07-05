@@ -2,6 +2,7 @@ package com.spss.smarthome.common.service;
 
 import com.spss.smarthome.secruity.JwtTokenUtil;
 import com.spss.smarthome.secruity.JwtUser;
+import com.spss.smarthome.secruity.JwtUserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,8 +36,8 @@ public class BaseService {
         if (StringUtils.isEmpty(token)) {
             return;
         }
+//        String userName = jwtTokenUtil.getUsernameFromToken(token.substring(tokenHead.length()));
+        user = ((JwtUserDetailsServiceImpl) userDetailsService).getJwtUser();
 
-        String userName = jwtTokenUtil.getUsernameFromToken(token.substring(tokenHead.length()));
-        user = (JwtUser) userDetailsService.loadUserByUsername(userName);
     }
 }

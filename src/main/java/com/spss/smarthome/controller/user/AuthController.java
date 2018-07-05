@@ -78,7 +78,7 @@ public class AuthController extends BaseController {
     }
 
     @RequestMapping(value = "/initPassword", method = RequestMethod.POST)
-    @ApiOperation(value = "用户修改密码", notes = "用户修改密码")
+    @ApiOperation(value = "用户找回密码", notes = "用户找回密码")
     public Result initPassword(@Valid @RequestBody UserSignUpForm updatePwdUser, BindingResult bindingResult) {
         String cacheVcode = (String) SmarthomeApplication.VCODEMAP.get(updatePwdUser.getPhone());
         if (cacheVcode == null || !cacheVcode.equals(updatePwdUser.getvCode())) {
@@ -89,4 +89,5 @@ public class AuthController extends BaseController {
         }
         return Result.success("密码修改成功");
     }
+
 }

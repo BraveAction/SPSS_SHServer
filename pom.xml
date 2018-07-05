@@ -40,6 +40,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--springboot热加载(开发环境下便于测试，生产环境需要删除)-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>2.0.2.RELEASE</version>
+            <optional>true</optional>
+        </dependency>
         <!--spring-security 和 jwt-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -56,18 +63,24 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.21.0.1</version>
         </dependency>
+        <!--Druid数据源-->
+        <!--<dependency>-->
+        <!--<groupId>com.alibaba</groupId>-->
+        <!--<artifactId>druid</artifactId>-->
+        <!--<version>1.1.10</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.10</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/druid-1.1.10.jar</systemPath>
+        </dependency>
         <!--mybatis依赖-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.2.0</version>
-        </dependency>
-        <!--springboot热加载(开发环境下便于测试，生产环境需要删除)-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <version>2.0.2.RELEASE</version>
-            <optional>true</optional>
         </dependency>
         <!--短信发送-->
         <dependency>

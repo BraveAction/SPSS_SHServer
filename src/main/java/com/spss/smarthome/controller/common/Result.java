@@ -4,7 +4,6 @@ package com.spss.smarthome.controller.common;
  * 统一返回结果
  * {"code":200,"message":"","data":{}/[]/""}
  */
-
 import org.springframework.http.HttpStatus;
 
 public class Result {

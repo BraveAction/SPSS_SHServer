@@ -7,16 +7,18 @@ import com.spss.smarthome.common.controller.BaseController;
 import com.spss.smarthome.common.controller.Result;
 import com.spss.smarthome.common.exception.RequestParameterException;
 import com.spss.smarthome.common.exception.ServiceException;
+import com.spss.smarthome.common.service.BaseService;
+import com.spss.smarthome.controller.form.ChangePwdForm;
 import com.spss.smarthome.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 @RestController
@@ -88,6 +90,16 @@ public class VerificationCodeController extends BaseController {
     }
 
 
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    @ApiOperation(value = "用户修改密码", notes = "用户修改密码")
+    public Result changePassword(HttpServletRequest request, @Valid @RequestBody ChangePwdForm updatePwdUser, BindingResult bindingResult) {
+        ((BaseService) userService).setToken(request);
+        if (bindingResult.hasErrors()) {
+            throw new RequestParameterException("参数有误");
+        }
+        boolean flag = userService.changePassword(updatePwdUser);
+        return flag ? Result.success("密码修改成功") : Result.failed(ServiceException.ERROR_CODE, "密码修改失败");
+    }
 }
 
 

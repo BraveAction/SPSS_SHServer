@@ -1,5 +1,6 @@
 package com.spss.smarthome.dao;
 
+import com.spss.smarthome.dao.vo.ChangePwdVo;
 import com.spss.smarthome.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,4 +34,7 @@ public interface UserDao {
 
     @Update("UPDATE user SET password = #{password} WHERE phone = #{phone}")
     Long updatePassword(User user);
+
+    @Update("UPDATE user SET phone=#{phone},password=#{newPwd} WHERE id=#{userId}")
+    Long changePwd(ChangePwdVo changePwdVo);
 }

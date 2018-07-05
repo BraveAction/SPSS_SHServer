@@ -48,7 +48,7 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title(title)
-                .termsOfServiceUrl("https://localhost:8443/")
+                .termsOfServiceUrl("http://localhost:8060/index.html")
                 .version(version)
                 .build();
     }
@@ -62,7 +62,7 @@ public class Swagger2Config {
     private List<Parameter> setToken() {
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        tokenPar.name(tokenHeader).description("令牌+" + tokenHead).modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name(tokenHeader).description(tokenHead + "令牌+").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
         pars.add(tokenPar.build());
         return pars;
     }

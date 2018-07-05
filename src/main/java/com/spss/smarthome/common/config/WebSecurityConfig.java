@@ -82,12 +82,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/configuration/*").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/v2/*").permitAll()
+                .antMatchers("/v2/**").permitAll()
                 .antMatchers("/configuration/*").permitAll()
-                .antMatchers("/manager/gatewayregister").permitAll()
 
-                // 对于获取token的rest api要允许匿名访问
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/manager/**").permitAll()
+                .antMatchers("/druid/**").permitAll()
+                .antMatchers("/auth/**").permitAll() // 对于获取token的rest api要允许匿名访问
                 // 测试接口
                 .antMatchers("/user/**").permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
