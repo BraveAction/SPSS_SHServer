@@ -1,18 +1,24 @@
 package com.spss.smarthome.controller.form;
 
-import com.spss.smarthome.model.User;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotNull;
 
-public class UserSignUpForm extends User {
+@Data
+@NoArgsConstructor
+public class UserSignUpForm {
+    @NonNull
     @NotNull
+    private String userName;
+    @NonNull
+    @NotNull
+    private String password;
+    @NotNull
+    @NonNull
+    private String phone;
+    @NotNull
+    @NonNull
     private String vCode;
-
-    public String getvCode() {
-        return vCode;
-    }
-
-    public void setvCode(String vCode) {
-        this.vCode = vCode;
-    }
 }

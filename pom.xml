@@ -148,6 +148,11 @@
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <version>5.15.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-pool</artifactId>
             <version>5.15.4</version>
         </dependency>

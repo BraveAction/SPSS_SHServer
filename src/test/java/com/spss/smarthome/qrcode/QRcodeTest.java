@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 public class QRcodeTest {
     @Test
     public void generateQRcode() {
-        String mac = "00:0c:43:e1:76:27";
+        String mac = "SPSS-00:0c:43:e1:76:28";
         Integer size = 500;
         File qrcodeImageFile = new File("images/gateway/qrcode/", UUID.randomUUID().toString() + ".png");
 

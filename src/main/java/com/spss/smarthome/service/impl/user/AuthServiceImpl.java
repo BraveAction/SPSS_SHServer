@@ -1,10 +1,14 @@
 package com.spss.smarthome.service.impl.user;
 
 
+import com.spss.smarthome.common.exception.RequestParameterException;
 import com.spss.smarthome.common.exception.ServiceException;
 import com.spss.smarthome.common.exception.UserException;
+import com.spss.smarthome.controller.form.InitPasswordForm;
 import com.spss.smarthome.controller.form.UserSignInForm;
+import com.spss.smarthome.controller.form.UserSignUpForm;
 import com.spss.smarthome.dao.UserDao;
+import com.spss.smarthome.dao.vo.UserSignUpInVo;
 import com.spss.smarthome.model.User;
 import com.spss.smarthome.secruity.JwtTokenUtil;
 import com.spss.smarthome.secruity.JwtUser;
@@ -55,46 +59,56 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User register(User userToAdd) {
-        User dbUser = userRepository.findUser(userToAdd);
+    public UserSignUpInVo register(UserSignUpForm userSignUpForm) {
+        User dbUser = userRepository.findUser(userSignUpForm);
         if (dbUser != null) {
-            if (dbUser.getUserName().equals(userToAdd.getUserName())) {
+            if (dbUser.getUserName().equals(userSignUpForm.getUserName())) {
                 throw new UserException("用户名已存在请更改后重新注册！");
-            } else if (dbUser.getPhone().equals(userToAdd.getPhone())) {
+            } else if (dbUser.getPhone().equals(userSignUpForm.getPhone())) {
                 throw new UserException("该手机号用户已存在请更改后重新注册！");
             }
         }
-        final String rawPassword = userToAdd.getPassword();
-        userToAdd.setPassword(bCryptPasswordEncoder.encode(rawPassword));
-        if (userRepository.insert(userToAdd) > 0) {
-            return userToAdd;
+        final String rawPassword = userSignUpForm.getPassword();
+        userSignUpForm.setPassword(bCryptPasswordEncoder.encode(rawPassword));
+        if (userRepository.insert(userSignUpForm) > 0) {
+            UserSignInForm userSignInForm = new UserSignInForm(userSignUpForm.getUserName(), rawPassword);
+            return signIn(userSignInForm);
         }
         return null;
     }
 
     @Override
-    public boolean updatePassword(User updatePwdUser) {
-        final String rawPassword = updatePwdUser.getPassword();
-        updatePwdUser.setPassword(bCryptPasswordEncoder.encode(rawPassword));
-        return userRepository.updatePassword(updatePwdUser) > 0;
+    public boolean updatePassword(InitPasswordForm initPasswordForm) {
+        final String rawPassword = initPasswordForm.getPassword();
+        initPasswordForm.setPassword(bCryptPasswordEncoder.encode(rawPassword));
+        return userRepository.updatePassword(initPasswordForm) > 0;
     }
 
     @Override
-    public UserSignInForm signIn(String username, String password) {
+    public UserSignUpInVo signIn(UserSignInForm userSignInForm) {
 //        UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
         // Perform the security
 //        final Authentication authentication = authenticationManager.authenticate(upToken);
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Reload password post-security so we can generate token
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(userSignInForm.getUserName());
+        String rawPassword = userSignInForm.getPassword();
+
+        if (userDetails == null) {
+            throw new RequestParameterException("用户不存在，请先注册!");
+        }
+
+        if (!bCryptPasswordEncoder.matches(rawPassword, userDetails.getPassword())) {
+            throw new RequestParameterException("密码不正确，请重新输入!");
+        }
         if (userDetailsService instanceof JwtUserDetailsServiceImpl) {
             User user = ((JwtUserDetailsServiceImpl) userDetailsService).getUser();
             final String token = jwtTokenUtil.generateToken(userDetails);
-            UserSignInForm userSignInForm = new UserSignInForm();
-            BeanUtils.copyProperties(user, userSignInForm);
-            userSignInForm.setToken(token);
-            return userSignInForm;
+            UserSignUpInVo userSignUpInVo = new UserSignUpInVo();
+            BeanUtils.copyProperties(user, userSignUpInVo);
+            userSignUpInVo.setToken(token);
+            return userSignUpInVo;
         } else {
             return null;
         }

@@ -39,6 +39,10 @@ public class MqttBroker {
         log.info(" broker service 启动在 uri: {}", uri);
         try {
             brokerService = BrokerFactory.createBroker(uri);
+//            KahaDBPersistenceAdapter kahadb = new KahaDBPersistenceAdapter();
+//            kahadb.setDirectory(new File("activemq-data/" + getName() + "-kahadb"));
+//            kahadb.setJournalMaxFileLength(500 * 1024);
+//            brokerService.setPersistenceAdapter(kahadb);
             brokerService.autoStart();
         } catch (Exception ex) {
             log.error("Mqtt服务启动失败");

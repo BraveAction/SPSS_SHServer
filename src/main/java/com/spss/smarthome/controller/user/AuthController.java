@@ -6,9 +6,10 @@ import com.spss.smarthome.common.controller.Result;
 import com.spss.smarthome.common.exception.RequestParameterException;
 import com.spss.smarthome.common.exception.ServiceException;
 import com.spss.smarthome.common.exception.UserException;
+import com.spss.smarthome.controller.form.InitPasswordForm;
 import com.spss.smarthome.controller.form.UserSignInForm;
 import com.spss.smarthome.controller.form.UserSignUpForm;
-import com.spss.smarthome.model.User;
+import com.spss.smarthome.dao.vo.UserSignUpInVo;
 import com.spss.smarthome.service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,13 +37,13 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     @ApiOperation(value = "用户登录", notes = "用户登录")
-    public Result signIn(@Valid @RequestBody User authenticationRequest, BindingResult bindingResult) {
+    public Result signIn(@Valid @RequestBody UserSignInForm userSignInForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new RequestParameterException();
         }
-        UserSignInForm userSignInForm = authService.signIn(authenticationRequest.getUserName(), authenticationRequest.getPassword());
+        UserSignUpInVo userSignUpInVo = authService.signIn(userSignInForm);
 
-        return Result.success("", userSignInForm);
+        return Result.success("", userSignUpInVo);
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.GET)
@@ -59,32 +60,35 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
     @ApiOperation(value = "用户注册", notes = "用户注册")
-    public Result signUp(@Valid @RequestBody UserSignUpForm addedUser, BindingResult bindingResult) {
+    public Result signUp(@Valid @RequestBody UserSignUpForm userSignUpForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new RequestParameterException();
         }
 
-        String cacheVcode = (String) SmarthomeApplication.VCODEMAP.get(addedUser.getPhone());
-        if (cacheVcode == null || !cacheVcode.equals(addedUser.getvCode())) {
+        String cacheVcode = (String) SmarthomeApplication.VCODEMAP.get(userSignUpForm.getPhone());
+        if (cacheVcode == null || !cacheVcode.equals(userSignUpForm.getVCode())) {
             throw new RequestParameterException("验证码不匹配");
         }
 
-        User user = authService.register(addedUser);
-        if (user == null) {
+        UserSignUpInVo userSignUpInVo = authService.register(userSignUpForm);
+        if (userSignUpInVo == null) {
             throw new ServiceException();
         }
 
-        return Result.success("用户注册成功");
+        return Result.success("", userSignUpInVo);
     }
 
     @RequestMapping(value = "/initPassword", method = RequestMethod.POST)
     @ApiOperation(value = "用户找回密码", notes = "用户找回密码")
-    public Result initPassword(@Valid @RequestBody UserSignUpForm updatePwdUser, BindingResult bindingResult) {
-        String cacheVcode = (String) SmarthomeApplication.VCODEMAP.get(updatePwdUser.getPhone());
-        if (cacheVcode == null || !cacheVcode.equals(updatePwdUser.getvCode())) {
+    public Result initPassword(@Valid @RequestBody InitPasswordForm initPasswordForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new RequestParameterException();
+        }
+        String cacheVcode = (String) SmarthomeApplication.VCODEMAP.get(initPasswordForm.getPhone());
+        if (cacheVcode == null || !cacheVcode.equals(initPasswordForm.getVCode())) {
             throw new RequestParameterException("验证码不匹配");
         }
-        if (!authService.updatePassword(updatePwdUser)) {
+        if (!authService.updatePassword(initPasswordForm)) {
             throw new UserException("用户不存在!");
         }
         return Result.success("密码修改成功");

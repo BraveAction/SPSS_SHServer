@@ -1,7 +1,10 @@
 package com.spss.smarthome.service;
 
 import com.spss.smarthome.common.exception.ServiceException;
+import com.spss.smarthome.controller.form.InitPasswordForm;
 import com.spss.smarthome.controller.form.UserSignInForm;
+import com.spss.smarthome.controller.form.UserSignUpForm;
+import com.spss.smarthome.dao.vo.UserSignUpInVo;
 import com.spss.smarthome.model.User;
 
 public interface AuthService {
@@ -17,28 +20,27 @@ public interface AuthService {
     /**
      * 用户注册
      *
-     * @param userToAdd
+     * @param userSignUpForm
      * @return
      */
-    User register(User userToAdd);
+    UserSignUpInVo register(UserSignUpForm userSignUpForm);
 
     /**
      * 用户重置密码
      *
-     * @param updatePwdUser
+     * @param initPasswordForm
      * @return
      */
-    boolean updatePassword(User updatePwdUser);
+    boolean updatePassword(InitPasswordForm initPasswordForm);
 
 
     /**
      * 用户登录
      *
-     * @param username
-     * @param password
-     * @return
+     *
+     * @param userSignInForm@return
      */
-    UserSignInForm signIn(String username, String password);
+    UserSignUpInVo signIn(UserSignInForm userSignInForm);
 
     /**
      * 用户刷新Token

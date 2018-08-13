@@ -13,14 +13,9 @@ import javax.validation.constraints.NotNull;
 public class UserSignInForm {
     @NotNull
     @NonNull
-    private String token;
-    @NotNull
-    @NonNull
-    private String id;
-    @NotNull
-    @NonNull
     private String userName;
-    @NotNull
     @NonNull
-    private String phone;
+    @NotNull
+    private String password;
+
 }
